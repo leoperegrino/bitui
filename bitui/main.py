@@ -20,10 +20,10 @@ def curses_main(stdscr: curses._CursesWindow, rpc_config: RPCConfig) -> int:
     app = App(stdscr, rpc_config)
     app.query_chain()
     app.display_summary()
-    app.display_last_blocks(5)
+    app.display_last_blocks(7)
     while True:
         app.tick()
-        app.redraw()
+        app.refresh()
         action = app.get_input()
 
         if action == Action.QUIT:

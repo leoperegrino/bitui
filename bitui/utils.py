@@ -43,13 +43,14 @@ def curses_wrapper(func: Callable[..., int], *args: Any, **kwds: Any) -> int:
     """
     try:
         stdscr = curses.initscr()
-        curses.noecho()
-        curses.cbreak()
+        curses.cbreak(True)
         curses.curs_set(0)
-        stdscr.box()
+        curses.echo(False)
         stdscr.keypad(True)
         stdscr.scrollok(True)
         stdscr.nodelay(True)
+        stdscr.box()
+        stdscr.refresh()
 
         try:
             curses.start_color()
@@ -68,6 +69,7 @@ def curses_wrapper(func: Callable[..., int], *args: Any, **kwds: Any) -> int:
     finally:
         if "stdscr" in locals():
             stdscr.keypad(False)  # pyright: reportUnboundVariable=false
-            curses.echo()
-            curses.nocbreak()
+            curses.cbreak(False)
+            curses.curs_set(1)
+            curses.echo(True)
             curses.endwin()

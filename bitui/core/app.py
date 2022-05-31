@@ -7,11 +7,9 @@ import time
 
 from typing import Any
 
-from bitui.rpc.btc import Calls
 from bitui.rpc.btc import BitcoinAPI
 from bitui.rpc.client import RPCConfig
 from bitui.screen import state
-from bitui.screen import controller
 from bitui.screen.state import TUIState
 
 
@@ -26,44 +24,40 @@ class App:
                  stdscr: state.curses._CursesWindow,
                  rpc_config: RPCConfig
                  ) -> None:
-        stdscr.refresh()
-        self._state = TUIState.default(stdscr)
+
+        self._state = TUIState.init(stdscr)
         self._api = BitcoinAPI(rpc_config)
 
     def query_chain(self) -> None:
         """Queries `blockchaininfo`."""
-        info = self._api.method(Calls.GETBLOCKCHAININFO)
-        self._state.chain_info.update(info.result)
+        info_result = self._api.get_blockchain_info()
+        self._state.chain_info.update(info_result)
 
     def display_summary(self) -> None:
         summary = _summary_info(self._state.chain_info)
-        self._state.info_box.win.addstr(summary)
+        self._state.lower.pad.addstr(summary)
 
-    def query_block(self, height: int) -> dict[Any, Any]:
-        block_hash = self._api.method(Calls.GETBLOCKHASH, [height]).result
-        block = self._api.method(Calls.GETBLOCK, [block_hash])
-        return block.result
+    def _query_block(self, height: int) -> dict[Any, Any]:
+        hash_result = self._api.get_block_hash(height)
+        block_result = self._api.get_block(hash_result)
 
-    def display_last_blocks(self, n_blocks: int) -> None:
-        # TODO: refactor
-        self._state.blocks.clear()
+        return block_result
+
+    def display_last_blocks(self, n: int) -> None:
         height = self._state.chain_info["blocks"]
-        start = max(0, height - n_blocks)
-        block_range = range(start, height)
-        win = self._state.blocks_box.win
 
-        for idx, block_h in enumerate(block_range):
-            info = self.query_block(block_h)
-            block_box = controller.horiz_split(idx, n_blocks, win)
-            block_box.win.addstr(_block_info(info))
-            self._state.blocks.append(block_box)
+        start = max(0, height - n)
 
-    def tick(self, seconds: float = 0.05) -> None:
+        for block_h in range(start, height):
+            info = self._query_block(block_h)
+            self._state.chain.new_block(_block_info(info))
+
+    def tick(self, seconds: float = 0.01) -> None:
         """Sleeps for `seconds`. Sets framerate and slows down CPU usage."""
         time.sleep(seconds)
 
-    def redraw(self) -> None:
-        pass
+    def refresh(self) -> None:
+        self._state.refresh()
 
     def get_input(self) -> Action:
         try:
@@ -73,6 +67,10 @@ class App:
         else:
             if key == "q":
                 return Action.QUIT
+            elif key == "h":
+                self._state.upper.scroll(-10)
+            elif key == "l":
+                self._state.upper.scroll(10)
             elif key == state.curses.KEY_RESIZE:
                 state.curses.update_lines_cols()
             elif key == -1:
