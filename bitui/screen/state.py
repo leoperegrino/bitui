@@ -128,7 +128,7 @@ class Block:
         self.frame = Window.frame(dim, pad)
         self.win = Window(dim.inner(), pad)
 
-    def write(self, content: str):
+    def write(self, content: str) -> None:
         self.win.screen.addstr(content)
 
 
