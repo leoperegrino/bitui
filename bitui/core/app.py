@@ -2,15 +2,20 @@
 """
 from __future__ import annotations
 
+import curses
 import enum
 import time
 
 from typing import Any
+from typing import TypeAlias
+from typing import TYPE_CHECKING
 
 from bitui.rpc.btc import BitcoinAPI
 from bitui.rpc.client import RPCConfig
-from bitui.screen import state
 from bitui.screen.state import TUIState
+
+if TYPE_CHECKING:
+    Screen: TypeAlias = curses._CursesWindow
 
 
 class Action(enum.Enum):
@@ -21,7 +26,7 @@ class Action(enum.Enum):
 class App:
 
     def __init__(self,
-                 stdscr: state.curses._CursesWindow,
+                 stdscr: Screen,
                  rpc_config: RPCConfig
                  ) -> None:
 
@@ -35,7 +40,7 @@ class App:
 
     def display_summary(self) -> None:
         summary = _summary_info(self._state.chain_info)
-        self._state.lower.pad.addstr(summary)
+        self._state.lower_win.screen.addstr(summary)
 
     def _query_block(self, height: int) -> dict[Any, Any]:
         hash_result = self._api.get_block_hash(height)
@@ -62,17 +67,17 @@ class App:
     def get_input(self) -> Action:
         try:
             key = self._state.stdscr.get_wch()
-        except state.curses.error:
+        except curses.error:
             pass
         else:
             if key == "q":
                 return Action.QUIT
             elif key == "h":
-                self._state.upper.scroll(-10)
+                self._state.upper_pad.scroll(-10)
             elif key == "l":
-                self._state.upper.scroll(10)
-            elif key == state.curses.KEY_RESIZE:
-                state.curses.update_lines_cols()
+                self._state.upper_pad.scroll(10)
+            elif key == curses.KEY_RESIZE:
+                curses.update_lines_cols()
             elif key == -1:
                 pass
 
