@@ -72,7 +72,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         "-d",
         "--data-dir",
         default="~/.bitcoin",
-        nargs="?",
         help="directory which to look for blockchain assets",
     )
     args = parser.parse_args(argv)
