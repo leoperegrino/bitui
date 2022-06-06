@@ -2,12 +2,12 @@
 from __future__ import annotations
 
 import json
-import requests
 import uuid
-
-from requests.auth import HTTPBasicAuth
 from typing import Any
 from typing import NamedTuple
+
+import requests
+from requests.auth import HTTPBasicAuth
 
 from bitui.rpc.error import RPCErrorCode
 
@@ -29,12 +29,12 @@ class RPCRequest(NamedTuple):
     method: str
     params: list[str | int]
     rpc_id: str | None
-    jsonrpc: str = "2.0"
+    jsonrpc: str = '2.0'
 
     @classmethod
     def uuid(cls, *args: Any, **kwargs: Any) -> RPCRequest:
         """Create a new instance with a random UUID."""
-        kwargs["rpc_id"] = str(uuid.uuid4())
+        kwargs['rpc_id'] = str(uuid.uuid4())
         return cls(*args, **kwargs)
 
 
@@ -53,14 +53,14 @@ class RPCResponse(NamedTuple):
     @classmethod
     def from_json(cls, json: dict[Any, Any]) -> RPCResponse:
         """Create a new instance from the `Response.json method."""
-        result = json["result"]
-        error = json["error"]
-        rpc_id = json["id"]
+        result = json['result']
+        error = json['error']
+        rpc_id = json['id']
 
         if error:
-            code = RPCErrorCode(error["code"])
-            message = error["message"]
-            data = error.get("data")
+            code = RPCErrorCode(error['code'])
+            message = error['message']
+            data = error.get('data')
             error = RPCError(code, message, data)
 
         return cls(result, error, rpc_id)

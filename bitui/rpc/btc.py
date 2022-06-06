@@ -27,7 +27,7 @@ class BitcoinAPI:
     def method(self, call: Calls, args: list[str | int] = []) -> RPCResponse:
         """Send RPC call. `cmd` must be a implemented call."""
         if not isinstance(call, Calls):
-            raise NotImplementedError(f"{call} not implemented")
+            raise NotImplementedError(f'{call} not implemented')
 
         rpc_request = RPCRequest.uuid(call.name.lower(), args)
 

@@ -5,10 +5,9 @@ from __future__ import annotations
 import curses
 import enum
 import time
-
 from typing import Any
-from typing import TypeAlias
 from typing import TYPE_CHECKING
+from typing import TypeAlias
 
 from bitui.rpc.btc import BitcoinAPI
 from bitui.rpc.client import RPCConfig
@@ -25,10 +24,11 @@ class Action(enum.Enum):
 
 class App:
 
-    def __init__(self,
-                 stdscr: Screen,
-                 rpc_config: RPCConfig
-                 ) -> None:
+    def __init__(
+        self,
+        stdscr: Screen,
+        rpc_config: RPCConfig,
+    ) -> None:
 
         self._state = TUIState.init(stdscr)
         self._api = BitcoinAPI(rpc_config)
@@ -49,7 +49,7 @@ class App:
         return block_result
 
     def display_last_blocks(self, n: int) -> None:
-        height = self._state.chain_info["blocks"]
+        height = self._state.chain_info['blocks']
 
         start = max(0, height - n)
 
@@ -70,11 +70,11 @@ class App:
         except curses.error:
             pass
         else:
-            if key == "q":
+            if key == 'q':
                 return Action.QUIT
-            elif key == "h":
+            elif key == 'h':
                 self._state.upper_pad.scroll(-10)
-            elif key == "l":
+            elif key == 'l':
                 self._state.upper_pad.scroll(10)
             elif key == curses.KEY_RESIZE:
                 curses.update_lines_cols()
@@ -87,17 +87,17 @@ class App:
 def _summary_info(info: dict[Any, Any]) -> str:
     ret = []
     for key, val in info.items():
-        ret.append(f"{key} -> {val}")
-    return "\n".join(ret)
+        ret.append(f'{key} -> {val}')
+    return '\n'.join(ret)
 
 
 def _block_info(info: dict[Any, Any]) -> str:
-    ret = "\n".join(
+    ret = '\n'.join(
         [
             f"height: {info['height']}",
             f"nonce: {info['nonce']}",
             f"confirmations: {info['confirmations']}",
-        ]
+        ],
     )
 
     return ret

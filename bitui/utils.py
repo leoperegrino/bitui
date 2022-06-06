@@ -4,11 +4,11 @@ import curses
 import os
 import pathlib
 import sys
-
 from argparse import Namespace
-from requests.auth import HTTPBasicAuth
 from typing import Any
 from typing import Callable
+
+from requests.auth import HTTPBasicAuth
 
 from bitui.rpc.client import RPCConfig
 
@@ -19,10 +19,10 @@ def _get_cookie_auth(data_dir: str, chain: str) -> HTTPBasicAuth:
     # of `user:password`, where `user` is '__cookie__' and `password` is a
     # random string.
 
-    cookie_fp = pathlib.Path(data_dir).expanduser() / chain / ".cookie"
+    cookie_fp = pathlib.Path(data_dir).expanduser() / chain / '.cookie'
 
-    with open(cookie_fp, "r", encoding="utf-8") as fp:
-        username, password = fp.read().strip().split(":")
+    with open(cookie_fp, 'r', encoding='utf-8') as fp:
+        username, password = fp.read().strip().split(':')
 
     return HTTPBasicAuth(username, password)
 
@@ -60,14 +60,14 @@ def curses_wrapper(func: Callable[..., int], *args: Any, **kwds: Any) -> int:
         except Exception:
             pass
 
-        if sys.version_info >= (3, 9) and hasattr(curses, "set_escdelay"):
+        if sys.version_info >= (3, 9) and hasattr(curses, 'set_escdelay'):
             curses.set_escdelay(25)
         else:
-            os.environ.setdefault("ESCDELAY", "25")
+            os.environ.setdefault('ESCDELAY', '25')
 
         return func(stdscr, *args, **kwds)
     finally:
-        if "stdscr" in locals():
+        if 'stdscr' in locals():
             stdscr.keypad(False)  # pyright: reportUnboundVariable=false
             curses.cbreak(False)
             curses.curs_set(1)

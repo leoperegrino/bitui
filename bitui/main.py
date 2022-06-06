@@ -2,12 +2,11 @@ from __future__ import annotations
 
 import argparse
 import curses
-
 from typing import Sequence
 
-from bitui.rpc.client import RPCConfig
 from bitui.core.app import Action
 from bitui.core.app import App
+from bitui.rpc.client import RPCConfig
 from bitui.utils import curses_wrapper
 from bitui.utils import rpc_config_from_args
 
@@ -36,43 +35,43 @@ def main(argv: Sequence[str] | None = None) -> int:
     The return value will be the program exit code.
     """
     parser = argparse.ArgumentParser(
-        description="a terminal user interface for the Bitcoin blockchain",
-        prog="bitui"
+        description='a terminal user interface for the Bitcoin blockchain',
+        prog='bitui',
     )
     parser.add_argument(
-        "url",
-        help="RPC url",
+        'url',
+        help='RPC url',
     )
     parser.add_argument(
-        "-c",
-        "--chain",
-        default="regtest",
-        choices=["main", "test", "signet", "regtest"],
-        help="Bitcoin chain to use",
+        '-c',
+        '--chain',
+        default='regtest',
+        choices=['main', 'test', 'signet', 'regtest'],
+        help='Bitcoin chain to use',
     )
     parser.add_argument(
-        "-u",
-        "--username",
+        '-u',
+        '--username',
         nargs=1,
-        help="username for authentication"
+        help='username for authentication',
     )
     parser.add_argument(
-        "-p",
-        "--password",
+        '-p',
+        '--password',
         nargs=1,
-        help="password for authentication"
+        help='password for authentication',
     )
     parser.add_argument(
-        "-C",
-        "--cookie",
-        action="store_true",
+        '-C',
+        '--cookie',
+        action='store_true',
         help="use bitcoin's cookie authentication",
     )
     parser.add_argument(
-        "-d",
-        "--data-dir",
-        default="~/.bitcoin",
-        help="directory which to look for blockchain assets",
+        '-d',
+        '--data-dir',
+        default='~/.bitcoin',
+        help='directory which to look for blockchain assets',
     )
     args = parser.parse_args(argv)
 
@@ -83,5 +82,5 @@ def main(argv: Sequence[str] | None = None) -> int:
     return exit_code
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     raise SystemExit(main())

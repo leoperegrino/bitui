@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import curses
-
 from typing import Any
-from typing import TypeAlias
 from typing import NamedTuple
 from typing import TYPE_CHECKING
+from typing import TypeAlias
 
 if TYPE_CHECKING:
     Screen: TypeAlias = curses._CursesWindow
@@ -25,7 +24,7 @@ class Dim(NamedTuple):
             self.width,
             self.y,
             self.x,
-            )
+        )
 
     def inner(self) -> Dim:
         """Return the `Dim` of the area inside it's borders."""
@@ -33,17 +32,18 @@ class Dim(NamedTuple):
             self.height - 2,
             self.width - 2,
             self.y + 1,
-            self.x + 1
+            self.x + 1,
         )
 
 
 class Window:
     """Static window to be derived from another screen."""
 
-    def __init__(self,
-                 dim: Dim,
-                 derived: Screen,
-                 ) -> None:
+    def __init__(
+        self,
+        dim: Dim,
+        derived: Screen,
+    ) -> None:
         self.dim = dim
         self.derived = derived
         self.screen = derived.derwin(*dim.values)
@@ -115,7 +115,7 @@ class Pad:
             y + 1,
             x + 1,
             y + h - 2,
-            x + w - 2
+            x + w - 2,
         )
 
 
@@ -192,7 +192,7 @@ class TUIState(NamedTuple):
             upper_frame,
             lower_win,
             lower_frame,
-            chain
+            chain,
         )
 
     def refresh(self) -> None:
