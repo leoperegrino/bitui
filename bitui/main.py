@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 import curses
 from typing import Sequence
+from typing import TYPE_CHECKING
+from typing import TypeAlias
 
 from bitui.core.app import Action
 from bitui.core.app import App
@@ -10,8 +12,11 @@ from bitui.rpc.client import RPCConfig
 from bitui.utils import curses_wrapper
 from bitui.utils import rpc_config_from_args
 
+if TYPE_CHECKING:
+    Screen: TypeAlias = curses._CursesWindow
 
-def curses_main(stdscr: curses._CursesWindow, rpc_config: RPCConfig) -> int:
+
+def curses_main(stdscr: Screen, rpc_config: RPCConfig) -> int:
     """
     High level overview of the curses application.
     To be wrapped with `curses_wrapper`, which just sets a few sane defaults.
