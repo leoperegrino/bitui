@@ -4,12 +4,12 @@ version = "0.1.0"
 description = "Bitcoin's blockchain TUI viewer"
 readme = "README.md"
 license = {file = "LICENSE"}
-keywords = ["terminal", "TUI", "viewer"]
-authors = [
-  {name = "leoperegrino"},
-]
-
+authors = [{name = "leoperegrino"}]
+urls = {repository = "https://github.com/leoperegrino/bitui"}
+scripts = {bitui = "bitui.main:main"}
 dependencies = ["requests"]
+
+keywords = ["terminal", "TUI", "viewer"]
 classifiers = [
 	"Environment :: Console :: Curses",
 	"License :: OSI Approved :: GNU Affero General Public License v3",
@@ -19,12 +19,6 @@ classifiers = [
 	"Topic :: System :: Shells",
 	"Topic :: Terminals",
 ]
-
-[project.urls]
-repository = "https://github.com/leoperegrino/bitui"
-
-[project.scripts]
-bitui = "bitui.main:main"
 
 [tool.mypy]
 check_untyped_defs = true
