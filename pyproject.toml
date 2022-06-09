@@ -3,10 +3,10 @@ name = "bitui"
 version = "0.1.0"
 description = "Bitcoin's blockchain TUI viewer"
 readme = "README.md"
-license = {file = "LICENSE"}
+license.file = "LICENSE"
 authors = [{name = "leoperegrino"}]
-urls = {repository = "https://github.com/leoperegrino/bitui"}
-scripts = {bitui = "bitui.main:main"}
+urls.repository = "https://github.com/leoperegrino/bitui"
+scripts.bitui = "bitui.main:main"
 dependencies = ["requests"]
 
 keywords = ["terminal", "TUI", "viewer"]
