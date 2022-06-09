@@ -9,7 +9,7 @@ from typing import NamedTuple
 import requests
 from requests.auth import HTTPBasicAuth
 
-from bitui.rpc.error import RPCErrorCode
+from bitui.network.error import RPCErrorCode
 
 # bitcoin's rpc proTocol is primarily JSON-RPC 1.0 but
 # also supports some of 2.0

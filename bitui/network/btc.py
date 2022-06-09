@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import enum
 
-from bitui.rpc.client import RPCConfig
-from bitui.rpc.client import RPCRequest
-from bitui.rpc.client import RPCResponse
-from bitui.rpc.client import RPCSession
+from bitui.network.rpc import RPCConfig
+from bitui.network.rpc import RPCRequest
+from bitui.network.rpc import RPCResponse
+from bitui.network.rpc import RPCSession
 
 
 class Calls(enum.Enum):

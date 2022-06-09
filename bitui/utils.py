@@ -10,7 +10,7 @@ from typing import Callable
 
 from requests.auth import HTTPBasicAuth
 
-from bitui.rpc.client import RPCConfig
+from bitui.network.rpc import RPCConfig
 
 
 def _get_cookie_auth(data_dir: str, chain: str) -> HTTPBasicAuth:

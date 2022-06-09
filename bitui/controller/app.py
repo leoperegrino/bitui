@@ -9,8 +9,8 @@ from typing import Any
 from typing import TYPE_CHECKING
 from typing import TypeAlias
 
-from bitui.rpc.btc import BitcoinAPI
-from bitui.rpc.client import RPCConfig
+from bitui.network.btc import BitcoinAPI
+from bitui.network.rpc import RPCConfig
 from bitui.screen.state import TUIState
 
 if TYPE_CHECKING:
