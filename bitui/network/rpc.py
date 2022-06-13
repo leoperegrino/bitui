@@ -28,13 +28,13 @@ class RPCConfig(NamedTuple):
 class RPCRequest(NamedTuple):
     method: str
     params: list[str | int]
-    rpc_id: str | None
+    id: str | None
     jsonrpc: str = '2.0'
 
     @classmethod
     def uuid(cls, *args: Any, **kwargs: Any) -> RPCRequest:
         """Create a new instance with a random UUID."""
-        kwargs['rpc_id'] = str(uuid.uuid4())
+        kwargs['id'] = str(uuid.uuid4())
         return cls(*args, **kwargs)
 
 
@@ -48,7 +48,7 @@ class RPCError(NamedTuple):
 class RPCResponse(NamedTuple):
     result: Any
     error: RPCError | None
-    rpc_id: int
+    id: int
 
     @classmethod
     def from_json(cls, json: dict[Any, Any]) -> RPCResponse:
@@ -101,7 +101,7 @@ class RPCSession:
         # Here we match the uuid in previous array to return it's index
         def match_idx(response: RPCResponse) -> int:
             for idx, request in enumerate(rpc_requests):
-                if request.rpc_id == response.rpc_id:
+                if request.id == response.id:
                     return idx
             return 0
 
