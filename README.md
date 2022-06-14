@@ -13,5 +13,6 @@ concept and a work in progress.
 - [ ] docker
 - [x] pre-commit-config.yaml
 - [ ] implement call cache
+- [ ] implement dynamic terminal size
 - [ ] implement async code
 - [ ] remove `requests` dependency
