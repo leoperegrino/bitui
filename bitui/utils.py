@@ -3,14 +3,18 @@ from __future__ import annotations
 import curses
 import os
 import pathlib
-import sys
 from argparse import Namespace
 from typing import Any
 from typing import Callable
+from typing import TYPE_CHECKING
+from typing import TypeAlias
 
 from requests.auth import HTTPBasicAuth
 
 from bitui.network.rpc import RPCConfig
+
+if TYPE_CHECKING:
+    Screen: TypeAlias = curses._CursesWindow
 
 
 def _get_cookie_auth(data_dir: str, chain: str) -> HTTPBasicAuth:
@@ -41,6 +45,8 @@ def curses_wrapper(func: Callable[..., int], *args: Any, **kwds: Any) -> int:
     """Initialize all curses options in one place. Almost the same as
     `curses.wrapper`.
     """
+    stdscr: Screen | None = None
+
     try:
         stdscr = curses.initscr()
         curses.cbreak(True)
@@ -60,15 +66,16 @@ def curses_wrapper(func: Callable[..., int], *args: Any, **kwds: Any) -> int:
         except Exception:
             pass
 
-        if sys.version_info >= (3, 9) and hasattr(curses, 'set_escdelay'):
+        try:
             curses.set_escdelay(25)
-        else:
+        except AttributeError:
             os.environ.setdefault('ESCDELAY', '25')
 
         return func(stdscr, *args, **kwds)
+
     finally:
-        if 'stdscr' in locals():
-            stdscr.keypad(False)  # pyright: reportUnboundVariable=false
+        if stdscr is not None:
+            stdscr.keypad(False)
             curses.cbreak(False)
             curses.curs_set(1)
             curses.echo(True)
