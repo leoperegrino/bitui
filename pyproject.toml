@@ -7,9 +7,20 @@ license.file = "LICENSE"
 authors = [{name = "leoperegrino"}]
 urls.repository = "https://github.com/leoperegrino/bitui"
 scripts.bitui = "bitui.main:main"
-dependencies = ["requests"]
 
-keywords = ["terminal", "TUI", "viewer"]
+dependencies = [
+	"requests",
+]
+optional-dependencies.test = [
+	"pytest",
+	"pytest-cov",
+]
+
+keywords = [
+	"terminal",
+	"TUI",
+	"viewer",
+]
 classifiers = [
 	"Environment :: Console :: Curses",
 	"License :: OSI Approved :: GNU Affero General Public License v3",
