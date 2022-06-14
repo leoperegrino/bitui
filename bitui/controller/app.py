@@ -7,13 +7,13 @@ import enum
 import time
 from typing import Any
 from typing import TYPE_CHECKING
-from typing import TypeAlias
 
 from bitui.network.btc import BitcoinAPI
 from bitui.network.rpc import RPCConfig
 from bitui.screen.state import TUIState
 
 if TYPE_CHECKING:
+    from typing import TypeAlias
     Screen: TypeAlias = curses._CursesWindow
 
 

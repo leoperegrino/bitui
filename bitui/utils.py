@@ -7,13 +7,13 @@ from argparse import Namespace
 from typing import Any
 from typing import Callable
 from typing import TYPE_CHECKING
-from typing import TypeAlias
 
 from requests.auth import HTTPBasicAuth
 
 from bitui.network.rpc import RPCConfig
 
 if TYPE_CHECKING:
+    from typing import TypeAlias
     Screen: TypeAlias = curses._CursesWindow
 
 

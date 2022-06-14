@@ -3,9 +3,9 @@ from __future__ import annotations
 import curses
 from typing import NamedTuple
 from typing import TYPE_CHECKING
-from typing import TypeAlias
 
 if TYPE_CHECKING:
+    from typing import TypeAlias
     Screen: TypeAlias = curses._CursesWindow
 
 

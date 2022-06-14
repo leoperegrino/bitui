@@ -4,7 +4,6 @@ import curses
 from typing import Any
 from typing import NamedTuple
 from typing import TYPE_CHECKING
-from typing import TypeAlias
 
 from bitui.screen.core import Chain
 from bitui.screen.core import Dim
@@ -13,6 +12,7 @@ from bitui.screen.core import Window
 
 
 if TYPE_CHECKING:
+    from typing import TypeAlias
     Screen: TypeAlias = curses._CursesWindow
 
 

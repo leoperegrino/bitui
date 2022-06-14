@@ -4,7 +4,6 @@ import argparse
 import curses
 from typing import Sequence
 from typing import TYPE_CHECKING
-from typing import TypeAlias
 
 from bitui.controller.app import Action
 from bitui.controller.app import App
@@ -13,6 +12,7 @@ from bitui.utils import curses_wrapper
 from bitui.utils import rpc_config_from_args
 
 if TYPE_CHECKING:
+    from typing import TypeAlias
     Screen: TypeAlias = curses._CursesWindow
 
 
